@@ -2,73 +2,29 @@ import React, { useEffect, useState } from "react";
 // import Navbar from "../components/Navbar";
 import axios from "axios";
 import Card from "../components/Card";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [todos, setTodos] = useState();
+  const [users, setUsers] = useState();
 
-  const fetchTodoList = async () => {
-    // fetch(URL,options)
-    // fetch("https://jsonplaceholder.typicode.com/todos")
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((result) => {
-    //     const data = result;
-    //     setTodos(data);
-    //   })
-    //   .catch((err) => {
-    //     console.log("something went wrong");
-    //   });
+  const fetchUser = async () => {
     try {
       const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos",
+        "https://6970361278fec16a63fd1d48.mockapi.io/api/user",
       );
-      setTodos(response.data);
+      if (response.status === 200) {
+        setUsers(response.data);
+      }
     } catch (error) {
       console.log("something went wrong", error);
     }
-    // console.log(response.data)
   };
 
-  // console.log(todos);
-
-  // useEffect(useCallback,dependencyarray)
-
-  // type -1
   useEffect(() => {
-    // yo vitra ko logic execute hunxa first render
-    fetchTodoList();
+    console.log("first page load");
+
+    fetchUser();
   }, []);
-
-  const [count, setCount] = useState(0);
-
-  // type : 2
-  useEffect(() => {
-    // jaba jaba count change hunxa taba matra yo vitra ko logic chalne ho
-    // p
-    console.log("count change vayo", count);
-  }, [count]);
-
-  const handleCount = () => {
-    setCount(count + 1);
-  };
-
-  const [searchGarekoWord, setSearchGarekoWord] = useState();
-
-  const handleChange = (e) => {
-    console.log("user is typing");
-    const value = e.target.value;
-    // console.log(value)
-    setSearchGarekoWord(value);
-  };
-
-  console.log(searchGarekoWord);
-
-  const filteredData = todos?.filter((todo) =>
-    todo?.title?.includes(searchGarekoWord),
-  );
-
-  console.log(filteredData);
 
   return (
     <div>
@@ -81,7 +37,7 @@ const Home = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Diouma
+              Intern Sathi
             </span>
           </a>
           <div className="flex md:order-2">
@@ -133,8 +89,8 @@ const Home = () => {
                 id="search-navbar"
                 className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search..."
-                onChange={handleChange}
-                value={searchGarekoWord}
+                // onChange={handleChange}
+                // value={searchGarekoWord}
               />
             </div>
 
@@ -210,6 +166,7 @@ const Home = () => {
                   About
                 </a>
               </li>
+
               <li>
                 <a
                   href="#"
@@ -218,12 +175,23 @@ const Home = () => {
                   Services
                 </a>
               </li>
+              <li>
+                <Link
+                  to="/apply"
+                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Apply
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
-      <div className="flex flex-wrap gap-2">
-        <Card data={filteredData} />
+      <div className="grid grid-cols-3 gap-2 p-5">
+        {/* map - data lai loop garera dekhauna display garna */}
+        {users?.map((user) => {
+          return <Card user={user} />;
+        })}
       </div>
     </div>
   );
