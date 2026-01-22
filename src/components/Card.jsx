@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Button from "./Button";
 
 const Card = ({ user }) => {
+  // console.log(user);
   return (
     <>
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -22,6 +25,11 @@ const Card = ({ user }) => {
               Email : {user?.email}
             </h5>
           </a>
+        </div>
+        <div className="flex justify-center">
+          <Link to={`/details/${user?.id}`}>
+           <Button buttonName={"View Details"}/>
+          </Link>
         </div>
       </div>
     </>

@@ -6,6 +6,8 @@ const ApplyForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    role : "",
+    address : ""
   });
 
   const navigate = useNavigate();
@@ -22,7 +24,6 @@ const ApplyForm = () => {
     }));
   };
 
-  console.log(formData);
 
   const handleSubmit = async (event) => {
     // api lai data dinu parne logic
@@ -32,7 +33,6 @@ const ApplyForm = () => {
         "https://6970361278fec16a63fd1d48.mockapi.io/api/user",
         formData,
       );
-      console.log(response);
       if (response.status === 201) {
         alert("form submitted successfully");
         navigate("/home");
@@ -82,6 +82,40 @@ const ApplyForm = () => {
               id="email"
               name="email"
               value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+          </div>
+          <div>
+            <label
+              for="role"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Role
+            </label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+          </div>
+          <div>
+            <label
+              for="address"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
               onChange={handleChange}
               required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
